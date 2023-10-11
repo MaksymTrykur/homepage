@@ -1,0 +1,51 @@
+namespace: homepage
+homepage:
+  defines: runnable
+  metadata:
+    name: homepage
+    description: A self-hosted services landing page, with docker and service integrations.
+    icon: https://github.com/gethomepage/homepage
+  containers:
+    homepage:
+      build: .
+  services:
+    http:
+      container: homepage
+      port: <- $port
+      host-port: <- $port
+      publish: false
+      protocol: TCP
+      description: Runs the homepage application on this port.
+  variables:
+    puid:
+      env: PUID
+      type: int
+      description: The user id for the process inside the container
+      value: 0
+    pgid:
+      env: PGID
+      type: int
+      description: The group id for the process inside the container
+      value: 0
+    port:
+      env: PORT
+      type: int
+      description: The port on which the homepage application runs
+      value: 3000
+    homepage-buildtime:
+      env: HOMEPAGE_BUILDTIME
+      type: string
+      description: The time of building Homepage
+      value: not set
+    node-env:
+      env: NODE_ENV
+      type: string
+      description: >-
+        Nodejs environment where the application runs. Use 'production' for
+        production environments
+      value: production
+    homepage-config-dir:
+      env: HOMEPAGE_CONFIG_DIR
+      type: string
+      description: The directory to load Home page configurations from
+      value: '!!!SETME!!!'
