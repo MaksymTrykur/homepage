@@ -1,0 +1,41 @@
+namespace: homepage
+
+homepage-dashboard:
+  defines: runnable
+  metadata:
+    name: homepage-dashboard
+    description: A self-hosted services landing page with Docker and service integrations.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    homepage-dashboard:
+      image: env-2027.registry.local/homepage-dashboard:main-29b7d57
+      build: .
+      dockerfile: Dockerfile
+  services: {}
+  connections: {}
+  variables:
+    log-level:
+      env: LOG_LEVEL
+      type: string
+      value: info
+      description: Defines the level of logging
+    next-public-buildtime:
+      env: NEXT_PUBLIC_BUILDTIME
+      type: string
+      value: '2023-04-01T00:00:00Z'
+      description: Public build time variable for the homepage
+    next-public-revision:
+      env: NEXT_PUBLIC_REVISION
+      type: string
+      value: rev-123
+      description: Public revision variable for the homepage
+    next-public-version:
+      env: NEXT_PUBLIC_VERSION
+      type: string
+      value: 1.0.0
+      description: Public version variable for the homepage
+
+stack:
+  defines: group
+  members:
+    - homepage/homepage-dashboard
