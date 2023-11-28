@@ -1,0 +1,38 @@
+namespace: homepage
+
+homepage-nextjs:
+  defines: runnable
+  metadata:
+    name: homepage-nextjs
+    description: A Next.js web application serving as a customizable application dashboard.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    homepage-nextjs:
+      image: env-2055.registry.local/homepage-nextjs:main-29b7d57
+      build: .
+      dockerfile: Dockerfile
+  services: {}
+  connections: {}
+  variables:
+    homepage-config-dir:
+      env: HOMEPAGE_CONFIG_DIR
+      type: string
+      value: /etc/homepage/config
+      description: The directory path for the application's configuration files.
+    homepage-var-:
+      env: HOMEPAGE_VAR_
+      type: string
+      value: HOMEPAGE_
+      description: Prefix for environment variables specific to the homepage application.
+    homepage-file-:
+      env: HOMEPAGE_FILE_
+      type: string
+      value: /var/lib/homepage/files/
+      description: >-
+        Prefix for file path environment variables used in the homepage
+        application.
+
+stack:
+  defines: group
+  members:
+    - homepage/homepage-nextjs
