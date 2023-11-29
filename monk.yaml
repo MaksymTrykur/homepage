@@ -1,0 +1,72 @@
+namespace: homepage
+
+dashboard:
+  defines: runnable
+  metadata:
+    name: dashboard
+    description: >-
+      Next.js application providing a customizable application dashboard with
+      integrations for various services.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    dashboard:
+      image: env-3055.registry.local/dashboard:main-29b7d57
+      build: .
+      dockerfile: Dockerfile
+  services:
+    http:
+      description: HTTP port for the Next.js application dashboard.
+      container: dashboard
+      port: 3000
+      host-port: 3000
+      publish: true
+      protocol: tcp
+  connections: {}
+  variables:
+    puid:
+      env: PUID
+      type: int
+      value: '0'
+      description: User ID that the service will run as, defaults to root user.
+    pgid:
+      env: PGID
+      type: int
+      value: '0'
+      description: Group ID that the service will run as, defaults to root group.
+    homepage-buildtime:
+      env: HOMEPAGE_BUILDTIME
+      type: string
+      value: '2023-04-01T00:00:00Z'
+      description: Timestamp of when the homepage was built, set at runtime.
+    next-public-buildtime:
+      env: NEXT_PUBLIC_BUILDTIME
+      type: string
+      value: '2023-04-01T00:00:00Z'
+      description: Public build time variable for the Next.js application.
+    next-public-revision:
+      env: NEXT_PUBLIC_REVISION
+      type: string
+      value: dev
+      description: Public revision variable for the Next.js application, defaults to 'dev'.
+    next-public-version:
+      env: NEXT_PUBLIC_VERSION
+      type: string
+      value: dev
+      description: Public version variable for the Next.js application, defaults to 'dev'.
+    log-level:
+      env: LOG_LEVEL
+      type: string
+      value: info
+      description: Logging level for the application, defaults to 'info'.
+    homepage-config-dir:
+      env: HOMEPAGE_CONFIG_DIR
+      type: string
+      value: /app/config
+      description: >-
+        Directory for the homepage configuration, defaults to 'config' directory
+        in the current working directory.
+
+stack:
+  defines: group
+  members:
+    - homepage/dashboard
